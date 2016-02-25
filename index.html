@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"> 
+		<script src="scripts/shuffle.js"> </script>
+		<script src="scripts/jugador.js"> </script>
+		<script src="scripts/humano.js"> </script>
+		<script src="scripts/maquina.js"> </script>
+		<script src="scripts/extraterrestre.js"> </script>
+		<script>
+			//iniciar el campo
+			var campo = [];
+
+			//rellenar el campo
+			for (var i = 1; i <= 50; i++) {
+				campo.push(new Humano("h"+i));
+				campo.push(new Extraterrestre("e"+i));
+				campo.push(new Maquina("m"+i));
+			}
+
+			//iniciar las rondas de luchas y iterar asta que solo quede uno
+			var ronda = 0;
+			while(campo.length!=1){
+				//randomize personajes
+				campo.shuffle();
+				//luchas de cada ronda
+				//en caso de que el numero de jugadores sea impar al hacer asta campo.length-1 el ultimo Jugador no lucha, y en caso de ser par ese -1 no afecta
+				for (var i = 0 ; i < campo.length-1; i+=2) {
+					campo[i].luchar(campo[i+1]);
+				};
+				//pasar todos los jugadores vivos a un array auxiliar
+				var campoAux = [];
+				for (var i = 0; i < campo.length; i++) {
+					if (campo[i].salud>=0){
+						campoAux.push(campo[i]);
+					}
+				};
+				//poner en el campo todos los jugadores vivos
+				campo = campoAux
+			}
+
+			console.log("Ganador: ");
+			console.log(campo[0].mostrarNombre());
+
+			
+
+		</script>
+	</head>
+	<body>
+
+	</body>
+</html>
